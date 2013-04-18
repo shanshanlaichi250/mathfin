@@ -5,3 +5,49 @@
 ### 1.1.1 股票指数
 
 
+1.2 S&P500 回报率
+----------------------------------------
+```{r}
+library("tseries") # load the tseries library
+library("zoo")
+price = get.hist.quote(instrument = "^gspc", start = "2000-01-01",quote="AdjClose") # download the prices,from January 1, 2000 until today
+y=diff( log (price)) # convert the prices into returns
+plot(y) # plot the returns
+y=coredata (y) # strip date information from returns
+library(moments)
+sd(y)
+min (y)
+max (y)
+skewness (y)
+kurtosis (y)
+acf (y,1)
+acf (y^2,1)
+jarque.bera.test (y)
+Box.test (y, lag = 20, type = c("Ljung-Box"))
+Box.test (y^2, lag = 20, type = c("Ljung-Box"))
+```
+1.3 回报率的程式化因子
+-------------------------
+* 波动集群
+* 后尾
+* 非线性相关
+
+1.4 波动率
+-----------------------
+收益率的标准偏差称为波动率
+```{r}
+library(MASS,stats) # load stats and MASS package
+q=acf (y,20)
+plot(q[2:20])
+q=acf (y^2,20)
+plot(q[2:20])
+b=Box.test (y,lag=21,type="Ljung-Box")
+b
+```
+
+
+1.6 后尾的定义
+----------
+### 1.6.1 后尾的检验
+相比于同方差同均值的正态分布而言，具有更多极端值的分布称之为后尾分布
+
