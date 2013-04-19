@@ -3,14 +3,30 @@
 1.1 价格，回报率和股票指数
 --------------------------------------
 ### 1.1.1 股票指数
-
+#### 价格权重指数
+价格权重指数是根据价格来定义各个股票的权重，价格高则权重高，但这个方法并不能真正反映基础市场的价值
+#### 价值权重指数
+价值权重指数是根据整个市场已发行股票的价值来定义权重的
+### 1.1.2 价格和收益
+\( p_t=\frac{p_t-p_{t-1}}{p_{t-1}}\)
 
 1.2 S&P500 回报率
 ----------------------------------------
 
 ```r
 library("tseries")  # load the tseries library
+```
+
+```
+## Warning: package 'tseries' was built under R version 2.15.3
+```
+
+```r
 library("zoo")
+```
+
+```
+## Warning: package 'zoo' was built under R version 2.15.3
 ```
 
 ```
@@ -18,7 +34,7 @@ library("zoo")
 ```
 
 ```
-## The following object is masked from 'package:base':
+## The following object(s) are masked from 'package:base':
 ## 
 ## as.Date, as.Date.numeric
 ```
@@ -40,19 +56,17 @@ plot(y)  # plot the returns
 
 ```r
 y = coredata(y)  # strip date information from returns
-library(moments)
-```
-
-```
-## Error: there is no package called 'moments'
-```
-
-```r
+library("moments")
 sd(y)
 ```
 
 ```
-## [1] 0.0134
+## Warning: sd(<matrix>) is deprecated.  Use apply(*, 2, sd) instead.
+```
+
+```
+## AdjClose 
+##   0.0134
 ```
 
 ```r
@@ -76,7 +90,8 @@ skewness(y)
 ```
 
 ```
-## Error: could not find function "skewness"
+## AdjClose 
+##  -0.1635
 ```
 
 ```r
@@ -84,7 +99,8 @@ kurtosis(y)
 ```
 
 ```
-## Error: could not find function "kurtosis"
+## AdjClose 
+##    10.43
 ```
 
 ```r
@@ -107,8 +123,8 @@ jarque.bera.test(y)
 ## 
 ## 	Jarque Bera Test
 ## 
-## data:  y
-## X-squared = 7704, df = 2, p-value < 2.2e-16
+## data:  y 
+## X-squared = 7703, df = 2, p-value < 2.2e-16
 ```
 
 ```r
@@ -119,8 +135,8 @@ Box.test(y, lag = 20, type = c("Ljung-Box"))
 ## 
 ## 	Box-Ljung test
 ## 
-## data:  y
-## X-squared = 102.8, df = 20, p-value = 3.981e-13
+## data:  y 
+## X-squared = 103, df = 20, p-value = 3.716e-13
 ```
 
 ```r
@@ -131,8 +147,8 @@ Box.test(y^2, lag = 20, type = c("Ljung-Box"))
 ## 
 ## 	Box-Ljung test
 ## 
-## data:  y^2
-## X-squared = 4615, df = 20, p-value < 2.2e-16
+## data:  y^2 
+## X-squared = 4618, df = 20, p-value < 2.2e-16
 ```
 
 1.3 回报率的程式化因子
@@ -179,8 +195,14 @@ b
 ## 
 ## 	Box-Ljung test
 ## 
-## data:  y
-## X-squared = 111, df = 21, p-value = 3.164e-14
+## data:  y 
+## X-squared = 111.1, df = 21, p-value = 3.02e-14
 ```
 
+
+
+1.6 后尾的定义
+----------
+### 1.6.1 后尾的检验
+相比于同方差同均值的正态分布而言，具有更多极端值的分布称之为后尾分布
 

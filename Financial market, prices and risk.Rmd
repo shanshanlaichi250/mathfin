@@ -19,7 +19,7 @@ price = get.hist.quote(instrument = "^gspc", start = "2000-01-01",quote="AdjClos
 y=diff( log (price)) # convert the prices into returns
 plot(y) # plot the returns
 y=coredata (y) # strip date information from returns
-library(moments)
+library("moments")
 sd(y)
 min (y)
 max (y)
