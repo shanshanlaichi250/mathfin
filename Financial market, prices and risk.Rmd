@@ -56,3 +56,109 @@ b
 ### 1.6.1 后尾的检验
 相比于同方差同均值的正态分布而言，具有更多极端值的分布称之为后尾分布
 
+
+2单变量的波动模型
+==========================
+本章主要讲述了单边量的波动模型，包括ARCH模型，GARCH模型，
+
+
+Listing 2.1 Garch and estmation in R
+```{r}
+library(tseries)
+library(zoo)
+p=get.hist.quote(instrument = "^gspc", start = "2005-01-01",end="2009-12-31",quote="AdjClose",quiet=T)# download the prices
+y=diff( log (p))*100 # get returns and multiply them by 100 (so they are expressed in returns)
+y=y-mean(y) # de-mean (set mean to zero)
+library(fGarch)
+garchFit (~ garch(1,0), data = y,include.mean=FALSE)
+garchFit (~ garch(4,0), data = y,include.mean=FALSE)
+garchFit (~ garch(4,1), data = y,include.mean=FALSE)
+garchFit (~ garch(1,1), data = y,include.mean=FALSE)
+garchFit (~ garch(1,1), data = y,include.mean=FALSE,cond.dist="std",trace=F)
+res=garchFit (~ garch(1,1), data =y,include.mean=FALSE,cond.dist="sstd",trace=F)# saves output to res
+plot(res) # shows various graphical analysis
+
+```
+
+5风险预测实施
+===================
+包含VaR和ES两个风险变预测手段，又分为非参数与参数估计的两种方法
+5.1应用
+---------
+HS--历史模拟
+第$p*T$个顺序观测值就是我们所需要的预测风险值，$p*T$需要时整数，则实际操作的时候需要将样本量进行删除。
+5.2历史模拟
+----------
+### 5.2.1预期缺口估计（ES）
+比-VaR值小的值的平均值
+### 5.2.2$W_E$(window size)
+大$W_E$的优缺点：
+* 优点：VaR对个别极端值不敏感
+* 缺点：旧数据对当前市场不具代表性
+```{r}
+library("tseries") # time series library
+# the two prices are downloaded separately
+library(zoo)
+p1 =get.hist.quote(instrument = "msft",start = "2000-01-01",end = "2009-12-31",quote = "AdjClose")
+p2 =get.hist.quote(instrument = "ibm", start = "2000-01-01",end = "2009-12-31",quote = "AdjClose")
+y1= coredata (diff(log (p1))) # convert prices to returns
+y2= coredata (diff(log (p2)))
+y1= tail(y1,T-14) # length adjustment
+y2= tail(y2,T-14)
+T=length (y1)
+value = 1000 # portfolio value
+y=cbind(y1,y2) # combine returns in one matrix
+p = 0.01 # probability
+ys =sort(y1) # sort returns
+op = T*p # p % smallest
+VaR1 = -ys[op]*value # VaR number
+```
+```{r}
+w=matrix (c (0.3,0.7)) # vector of portfolio weights
+yp = y %*% w # obtain portfolio returns
+yps = sort(yp)
+VaR2 = -yps[op]*value # VaR number
+```
+收益率是正态分布时候的VaR
+单变量
+```{r}
+sigma = sd(y1) # estimate the volatility
+VaR3 = -sigma * qnorm(p) * value # calculate the VaR
+```
+多变量
+```{r}
+sigma1 = sqrt(t(w)%*% cov (y) %*% w) # portfolio volatility
+VaR4 = -sigma1 * qnorm(p)*value
+```
+收益率是t分布时候的VaR
+```{r}
+library(QRM)
+scy1=(y1)*100 # scale the returns
+res=fit.st (scy1) # estimate the distribution parameters
+sigma=res$par.ests[3]/100 # rescale the volatility
+nu=res$par.ests[1] # extract the degrees of freedom
+VaR5 = -sigma *qt(df=nu,p=p) * value # calculates the VaR
+```
+
+5.3.4 正态分布下的ES
+```{r}
+ES2 = sigma* dnorm( qnorm(p))/p * value
+```
+```{r}
+VaR = -qnorm(p)
+integrand = function (q){q * dnorm(q)}
+ES = -sigma *integrate(integrand, -Inf,-VaR)$value/p * value
+```
+6期权和债券的VaR的分析
+=========================
+在第五章里讲的VaR分析是针对资产的VaR分析，这是只要知道资产的分布是什么就可以了，但是这个资产是不包括期权和债券的，因为他们本质的价值随时间的变化而改变。
+6.1债券
+----------
+债券的价格计算公式如下：
+$$P=g\left(r,t \right)=\sum_{1}^{T}\frac{\tau _t}{{(1+r)}^{t}}$$
+r与P不是呈线性变化的
+### 6.1.1
+债券价格的变化随时间的变化可以表示如下式
+$$g(r+dr)=g(r)+dr*g'(r)$$
+修正的duration这么定义：${D}^{*}=-\frac{1}{P}g'(r)$
+计算债券的VaR的第一步就是辨别利率变化的分布函数$r_t-r_{t-1}=dr\sim N(0,{\sigma _r}^{2})$
