@@ -113,7 +113,7 @@ jarque.bera.test(y)
 ## 	Jarque Bera Test
 ## 
 ## data:  y
-## X-squared = 7714, df = 2, p-value < 2.2e-16
+## X-squared = 7732, df = 2, p-value < 2.2e-16
 ```
 
 ```r
@@ -125,7 +125,7 @@ Box.test(y, lag = 20, type = c("Ljung-Box"))
 ## 	Box-Ljung test
 ## 
 ## data:  y
-## X-squared = 103.1, df = 20, p-value = 3.485e-13
+## X-squared = 102.9, df = 20, p-value = 3.862e-13
 ```
 
 ```r
@@ -137,7 +137,7 @@ Box.test(y^2, lag = 20, type = c("Ljung-Box"))
 ## 	Box-Ljung test
 ## 
 ## data:  y^2
-## X-squared = 4621, df = 20, p-value < 2.2e-16
+## X-squared = 4626, df = 20, p-value < 2.2e-16
 ```
 
 1.3 回报率的程式化因子
@@ -185,7 +185,7 @@ b
 ## 	Box-Ljung test
 ## 
 ## data:  y
-## X-squared = 111.2, df = 21, p-value = 2.842e-14
+## X-squared = 110.9, df = 21, p-value = 3.231e-14
 ```
 
 
@@ -322,7 +322,7 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.117 secs
+##  Time difference of 0.145 secs
 ```
 
 ```
@@ -335,7 +335,7 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 0)
-## <environment: 0x07651070>
+## <environment: 0x0775b648>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -359,7 +359,7 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ##  -2208    normalized:  -1.755 
 ## 
 ## Description:
-##  Tue Apr 23 16:50:29 2013 by user: Z-Q
+##  Fri Apr 26 11:40:19 2013 by user: Z-Q
 ```
 
 ```r
@@ -461,13 +461,13 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ## alpha3  -348.6  -360.9 -156.3 -652.8 -156.2
 ## alpha4  -287.6  -324.8 -222.9 -156.2 -592.5
 ## attr(,"time")
-## Time difference of 0.147 secs
+## Time difference of 0.137 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.536 secs
+##  Time difference of 0.504 secs
 ```
 
 ```
@@ -480,7 +480,7 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(4, 0)
-## <environment: 0x076e0898>
+## <environment: 0x04c33c04>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -507,7 +507,7 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ##  -1913    normalized:  -1.52 
 ## 
 ## Description:
-##  Tue Apr 23 16:50:29 2013 by user: Z-Q
+##  Fri Apr 26 11:40:20 2013 by user: Z-Q
 ```
 
 ```r
@@ -611,13 +611,13 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ## alpha4 -25579 -20287 -20482 -20079 -20621 -23197
 ## beta1  -39015 -23003 -23098 -22858 -23197 -29762
 ## attr(,"time")
-## Time difference of 0.207 secs
+## Time difference of 0.195 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.62 secs
+##  Time difference of 0.573 secs
 ```
 
 ```
@@ -630,7 +630,7 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(4, 1)
-## <environment: 0x07147024>
+## <environment: 0x0779ff6c>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -658,7 +658,7 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ##  -1826    normalized:  -1.451 
 ## 
 ## Description:
-##  Tue Apr 23 16:50:30 2013 by user: Z-Q
+##  Fri Apr 26 11:40:20 2013 by user: Z-Q
 ```
 
 ```r
@@ -744,7 +744,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ## alpha1  -79509 -64620  -72787
 ## beta1  -117673 -72787  -94188
 ## attr(,"time")
-## Time difference of 0.03 secs
+## Time difference of 0.033 secs
 ## 
 ## --- END OF TRACE ---
 ## 
@@ -763,7 +763,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 1)
-## <environment: 0x076c63b4>
+## <environment: 0x0779aae8>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -788,7 +788,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ##  -1837    normalized:  -1.46 
 ## 
 ## Description:
-##  Tue Apr 23 16:50:30 2013 by user: Z-Q
+##  Fri Apr 26 11:40:20 2013 by user: Z-Q
 ```
 
 ```r
@@ -806,7 +806,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE, cond.dist = "std", trace 
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 1)
-## <environment: 0x076e4a28>
+## <environment: 0x070a75b0>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -832,7 +832,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE, cond.dist = "std", trace 
 ##  -1813    normalized:  -1.441 
 ## 
 ## Description:
-##  Tue Apr 23 16:50:31 2013 by user: Z-Q
+##  Fri Apr 26 11:40:21 2013 by user: Z-Q
 ```
 
 ```r
@@ -986,5 +986,148 @@ ES = -sigma * integrate(integrand, -Inf, -VaR)$value/p * value
 6.1债券
 ----------
 债券的价格计算公式如下：
-$$P=g\left(r,t \right)=\sum_{1}^{T}\frac{\tau _t}{{1+r}^{t}}$$
+$$P=g\left(r,t \right)=\sum_{1}^{T}\frac{\tau _t}{{(1+r)}^{t}}$$
 r与P不是呈线性变化的
+### 6.1.1
+债券价格的变化随时间的变化可以表示如下式
+$$g(r+dr)=g(r)+dr*g'(r)$$
+修正的duration这么定义：${D}^{*}=-\frac{1}{P}g'(r)$
+计算债券的VaR的第一步就是辨别利率变化的分布函数$r_t-r_{t-1}=dr\sim N(0,{\sigma _r}^{2})$
+
+
+
+
+```r
+source("bs.r")  # input the Black Scholes pricing function
+```
+
+```
+## Warning: cannot open file 'bs.r': No such file or directory
+```
+
+```
+## Error: cannot open the connection
+```
+
+```r
+P0 = 50  # initial spot price
+sigma = 0.2  # annual volatility
+r = 0.05  # annual interest
+T = 0.5  # time to expiration
+X = 40  # strike price
+f = bs(X, P0, r, sigma, T)  # analytical call price
+```
+
+```
+## Error: could not find function "bs"
+```
+
+```r
+
+S = 1e+06  # number of simulations
+set.seed(12)  # set seed
+F = P0 * exp(r * T)  # futures price
+ysim = rnorm(S, -0.5 * sigma * sigma * T, sigma * sqrt(T))  # simulated returns with the log normal correction
+F = F * exp(ysim)  # futures price
+SP = F - X  # payoff
+SP[SP < 0] = 0  # set negative outcomes to zero
+fsim = SP * exp(-r * T)  # discount
+
+hist(F, probability = TRUE, ylim = c(0, 0.06))  # make Figure 7.5
+# make Figure 7.6
+x = seq(min(F), max(F), length = 100)
+lines(x, dnorm(x, mean = mean(F), sd = sd(SP)))
+```
+
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-111.png) 
+
+```r
+hist(fsim, nclass = 100, probability = TRUE)
+```
+
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-112.png) 
+
+*** 7.3.1
+VaR值的MC模拟步骤
+1. 计算投资组合的初始价值
+$$\vartheta _{t}=x^{b}P_{t}$$
+2. 从正太分布中模拟S个一天收益率$y_{t+1,i}$
+$$N\left ( 0,\sigma ^{2} \right ),i=1,2...S$$
+3. 计算一天后的远期价格
+$$P_{t+1,i}=P_te^{r(1/365)}e^{y_{t+1,i}}e^{-0.5\sigma ^2}$$
+4. 计算投资组合模拟的远期价值
+$$q_{t+1,i}=x^{b}P_{t+1,i}$$
+5. 模拟出来的第i个的利/亏值
+$$q_{t+1,i}=\vartheta _{t+1,i}-\vartheta _{t}$$
+6. VaR可以直接从模拟出来的P/L数组里得到
+
+```r
+set.seed(1)  # set seed
+S = 1e+07  # number of simulations
+s2 = 0.01^2  # daily variance
+p = 0.01  # probability
+r = 0.05  # annual risk free
+P = 100  # today’s price
+ysim = rnorm(S, r/365 - 0.5 * s2, sqrt(s2))  # sim returns
+Psim = P * exp(ysim)  # future prices
+q = sort(Psim - P)  # simulated P/L
+VaR1 = -q[p * S]  # get VaR
+```
+
+*** 7.3.2
+债券的模拟步骤只要将第一与第四步替换成如下
+1'. $$\vartheta _{t}=x^{0}g(P_{t},X,T,\sqrt{250}\sigma ,r)$$
+4'. $$\vartheta _{t+1,i}=x^{0}g(P_{t+1,i},X,T-1/365,\sqrt{250}\sigma ,r)$$
+
+```r
+T = 0.25; # time to expiration
+X = 100; # strike price
+sigma = sqrt(s2 * 250); # annual volatility
+source('bs.r')
+```
+
+```
+## Warning: cannot open file 'bs.r': No such file or directory
+```
+
+```
+## Error: cannot open the connection
+```
+
+```r
+f=bs(X,P,r,sigma,T) # analytical call price
+```
+
+```
+## Error: could not find function "bs"
+```
+
+```r
+fsim = bs(X,Psim,r,sigma,T- (1/365)) # simulate option prices
+```
+
+```
+## Error: could not find function "bs"
+```
+
+```r
+q=sort(fsim$Call - f$Call) # simulated P/L
+```
+
+```
+## Error: error in evaluating the argument 'x' in selecting a method for
+## function 'sort': Error in fsim$Call : $ operator is invalid for atomic
+## vectors
+```
+
+```r
+VaR2 = -q[p * S] # get VaR
+```
+
+*** 7.3.3
+债券与股票的组合模拟就是将第一步与第四部分别的式子进行简单的相加
+
+7.4投资组合VaR的模拟
+-----------------------
+
+

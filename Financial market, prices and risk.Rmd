@@ -162,3 +162,160 @@ r与P不是呈线性变化的
 $$g(r+dr)=g(r)+dr*g'(r)$$
 修正的duration这么定义：${D}^{*}=-\frac{1}{P}g'(r)$
 计算债券的VaR的第一步就是辨别利率变化的分布函数$r_t-r_{t-1}=dr\sim N(0,{\sigma _r}^{2})$
+
+
+
+```{r}
+source ('bs.r') # input the Black Scholes pricing function
+P0 = 50 # initial spot price
+sigma = 0.2 # annual volatility
+r = 0.05 # annual interest
+T = 0.5 # time to expiration
+X=40 # strike price
+f=bs(X,P0,r,sigma,T) # analytical call price
+
+S = 1e6 # number of simulations
+set.seed(12) # set seed
+F = P0 *exp (r*T) # futures price
+ysim = rnorm(S,-0.5 * sigma * sigma * T,sigma *sqrt(T))# simulated returns with the log normal correction
+F= F*exp (ysim) # futures price
+SP = F-X # payoff
+SP[SP < 0] = 0 # set negative outcomes to zero
+fsim = SP * exp (- r*T) # discount
+
+hist(F,probability = TRUE,ylim = c(0,0.06)) # make Figure 7.5
+# make Figure 7.6
+x=seq (min (F),max (F),length = 100)
+lines(x, dnorm(x, mean = mean(F), sd = sd(SP)))
+hist(fsim,nclass = 100,probability = TRUE)
+```
+### 7.3.1
+VaR值的MC模拟步骤
+1. 计算投资组合的初始价值
+$$\vartheta _{t}=x^{b}P_{t}$$
+2. 从正太分布中模拟S个一天收益率$y_{t+1,i}$
+$$N\left ( 0,\sigma ^{2} \right ),i=1,2...S$$
+3. 计算一天后的远期价格
+$$P_{t+1,i}=P_te^{r(1/365)}e^{y_{t+1,i}}e^{-0.5\sigma ^2}$$
+4. 计算投资组合模拟的远期价值
+$$q_{t+1,i}=x^{b}P_{t+1,i}$$
+5. 模拟出来的第i个的利/亏值
+$$q_{t+1,i}=\vartheta _{t+1,i}-\vartheta _{t}$$
+6. VaR可以直接从模拟出来的P/L数组里得到
+```{r}
+set.seed(1) # set seed
+S = 1e7 # number of simulations
+s2 = 0.01^2 # daily variance
+p = 0.01 # probability
+r = 0.05 # annual risk free
+P = 100 # today’s price
+ysim = rnorm(S,r/365-0.5 * s2,sqrt(s2)) # sim returns
+Psim = P *exp (ysim) # future prices
+q=sort(Psim-P) # simulated P/L
+VaR1 = - q[p*S] # get VaR
+```
+### 7.3.2
+债券的模拟步骤只要将第一与第四步替换成如下
+1'. $$\vartheta _{t}=x^{0}g(P_{t},X,T,\sqrt{250}\sigma ,r)$$
+4'. $$\vartheta _{t+1,i}=x^{0}g(P_{t+1,i},X,T-1/365,\sqrt{250}\sigma ,r)$$
+```{r}
+T = 0.25; # time to expiration
+X = 100; # strike price
+sigma = sqrt(s2 * 250); # annual volatility
+source('bs.r')
+f=bs(X,P,r,sigma,T) # analytical call price
+fsim = bs(X,Psim,r,sigma,T- (1/365)) # simulate option prices
+q=sort(fsim$Call - f$Call) # simulated P/L
+VaR2 = -q[p * S] # get VaR
+```
+### 7.3.3
+债券与股票的组合模拟就是将第一步与第四部分别的式子进行简单的相加
+
+7.4投资组合VaR的模拟
+-----------------------
+
+
+
+
+
+8.2 S&P500的后验检验
+-----------------------
+```{r}
+library("tseries") # time series library
+library(zoo)
+p=get.hist.quote(instrument = "^gspc", start = "1994-02-11",end = "2009-12-31",quote = "AdjClose",quiet = T)# download the prices
+y=diff(log (p)) # get returns
+y=coredata (y) # strip date information from returns
+T=length (y) # number of observations for return y
+WE = 1000 # estimation window length
+p = 0.01 # probability
+l1 = WE * p # HS observation
+value = 1; # portfolio
+VaR = matrix (nrow=T,ncol=4) # matrix to hold VaR forecasts for 4 models
+# EWMA setup
+lambda = 0.94;
+s11 = var (y[1:30]);
+for (t in 2:WE) s11 = lambda * s11 + (1 - lambda) * y[t - 1]^2
+library(fGarch)
+for (t in (WE + 1):T){
+t1 = t- WE; # start of the data window
+t2 = t- 1; # end of the data window
+window = y[t1:t2] # data for estimation
+# EWMA
+s11 = lambda * s11 + (1- lambda) * y[t - 1]^2
+VaR[t,1] = -qnorm(p) * sqrt(s11) * value#没有-号
+#MA
+VaR[t,2] = -sd(window) * qnorm(p)* value#没有-号
+#HS
+ys =sort(window) # sort returns
+VaR[t,3] = -ys[l1]* value # VaR number
+# GARCH(1,1)
+g=garchFit (formula = ~ garch(1,1), window ,trace=FALSE,include.mean=FALSE)
+par=g@fit$matcoef # put parameters into vector par
+s4=par[1]+par[2]* window[WE]^2+par[3]* g@h.t[WE]
+VaR[t,4] =- sqrt(s4) * qnorm(p) * value   #没有-号，教材错误
+}
+
+W1 = WE+1
+for (i in 1:4){
+VR =sum (y[W1:T] < - VaR[W1:T,i])/(p*(T - WE))
+s=sd(VaR[W1:T,i]) # VaR volatility
+cat (i,"VR",VR,"VaR vol",s,"\n") # print results
+}
+matplot(cbind(y[W1:T],VaR[W1:T,]),type='l')
+```
+
+### 8.3.1 伯努利覆盖检验
+```{r}
+bern_ test = function (p,v){
+a=p^(sum (v))*(1- p)^(length (v) - sum (v))
+b= (sum (v)/length (v))^( sum (v))*(1 ( sum (v)/length (v)))^( length (v) - sum (v))
+return ( - 2*log (a/b))
+}
+```
+### 8.3.2 violations的独立性检验
+```{r}
+ind _test = function (V){
+J=matrix (ncol = 4,nrow = length (V))
+for (i in 2:length (V)){
+J[i,1] = V[i - 1] == 0 & V[i] == 0
+J[i,2] = V[i - 1] == 0 & V[i] == 1
+J[i,3] = V[i - 1] == 1 & V[i] == 0
+J[i,4] = V[i - 1] == 1 & V[i] == 1
+}
+V_00 = sum (J[,1],na.rm = TRUE)
+V_01 = sum (J[,2],na.rm = TRUE)
+V_10 = sum (J[,3],na.rm = TRUE)
+V_11 = sum (J[,4],na.rm = TRUE)
+p_00 = V_00/(V_00 + V_01)
+p_01 = V_01/(V_00 + V_01)
+p_10 = V_10/(V_10 + V_11)
+p_11 = V_11/(V_10 + V_11)
+hat_p = (V_01 + V_11)/(V_00 + V_01 + V_10 + V_11)
+a= (1- hat_p)^(V_00 + V_10)*(hat_p)^(V_01 + V_11)
+b = (p_00)^(V_00)*(p_01)^(V_01)*(p_10)^(V_10)* p_11^(V_11)
+return ( - 2*log (a/b))
+}
+```
+#### 8.3.3 S&P的VaR的检验
+
