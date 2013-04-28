@@ -287,15 +287,15 @@ matplot(cbind(y[W1:T],VaR[W1:T,]),type='l')
 
 ### 8.3.1 伯努利覆盖检验
 ```{r}
-bern_ test = function (p,v){
-a=p^(sum (v))*(1- p)^(length (v) - sum (v))
-b= (sum (v)/length (v))^( sum (v))*(1 ( sum (v)/length (v)))^( length (v) - sum (v))
+bern_test = function (p,v){
+a=p^(sum(v))*(1-p)^(length(v) - sum(v))
+b= (sum (v)/length (v))^( sum (v))*(1- ( sum (v)/length (v)))^( length (v) - sum (v))
 return ( - 2*log (a/b))
 }
 ```
 ### 8.3.2 violations的独立性检验
 ```{r}
-ind _test = function (V){
+ind_test = function (V){
 J=matrix (ncol = 4,nrow = length (V))
 for (i in 2:length (V)){
 J[i,1] = V[i - 1] == 0 & V[i] == 0
@@ -319,3 +319,45 @@ return ( - 2*log (a/b))
 ```
 #### 8.3.3 S&P的VaR的检验
 
+```{r}
+W1 = WE + 1
+ya = y[W1:T]
+VaRa = VaR[W1:T,]
+m=c("EWMA","MA","HS","GARCH")
+for (i in 1:4){
+q = y[W1:T]< -VaR[W1:T,i]
+v = VaRa*0
+v[q,i] = 1
+ber = bern_test(p,v[,i])
+ind = ind_test(v[,i])
+cat (i,m[i],'Bernoulli',ber,1- pchisq (ber,1),"independence",ind,1- pchisq (ind,1),"\n")
+}
+```
+
+8.4 期望缺口的后验检验
+---------------------------
+```{r}
+ES =matrix (nrow = T,ncol = 2) # ES forecasts for 2 models
+VaR = matrix (nrow = T,ncol = 2) # VaR forecasts for 2 models
+for (t in (WE + 1):T){
+t1 = t- WE;
+t2 = t- 1;
+window = y[t1:t2]
+# EWMA
+s11 = lambda * s11 + (1- lambda) * y[t - 1]^2
+VaR[t,1] = - qnorm(p) * sqrt(s11) * value
+ES[t,1] =sqrt(s11) * dnorm( qnorm(p)) / p
+#HS
+ys =sort(window)
+VaR[t,2] = - ys[l1]* value
+ES[t,2] =- mean(ys[1:l1]) * value # ES number
+}
+
+ESa = ES[W1:T,]
+VaRa = VaR[W1:T,]
+for (i in 1:2){
+q = ya <= -VaRa[,i]
+nES = mean(ya[q] / - ESa[q,i])
+cat(i,"nES",nES,"\n")
+}
+```

@@ -34,6 +34,7 @@ price = get.hist.quote(instrument = "^gspc", start = "2000-01-01", quote = "AdjC
 
 ```
 ## time series starts 2000-01-03
+## time series ends   2013-04-26
 ```
 
 ```r
@@ -57,7 +58,7 @@ sd(y)
 ```
 
 ```
-## [1] 0.0134
+## [1] 0.01339
 ```
 
 ```r
@@ -113,7 +114,7 @@ jarque.bera.test(y)
 ## 	Jarque Bera Test
 ## 
 ## data:  y
-## X-squared = 7732, df = 2, p-value < 2.2e-16
+## X-squared = 7741, df = 2, p-value < 2.2e-16
 ```
 
 ```r
@@ -125,7 +126,7 @@ Box.test(y, lag = 20, type = c("Ljung-Box"))
 ## 	Box-Ljung test
 ## 
 ## data:  y
-## X-squared = 102.9, df = 20, p-value = 3.862e-13
+## X-squared = 102.9, df = 20, p-value = 3.844e-13
 ```
 
 ```r
@@ -137,7 +138,7 @@ Box.test(y^2, lag = 20, type = c("Ljung-Box"))
 ## 	Box-Ljung test
 ## 
 ## data:  y^2
-## X-squared = 4626, df = 20, p-value < 2.2e-16
+## X-squared = 4627, df = 20, p-value < 2.2e-16
 ```
 
 1.3 回报率的程式化因子
@@ -185,7 +186,7 @@ b
 ## 	Box-Ljung test
 ## 
 ## data:  y
-## X-squared = 110.9, df = 21, p-value = 3.231e-14
+## X-squared = 110.9, df = 21, p-value = 3.209e-14
 ```
 
 
@@ -316,13 +317,13 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ## omega  -215.2 -114.4
 ## alpha1 -114.4 -176.8
 ## attr(,"time")
-## Time difference of 0.014 secs
+## Time difference of 0.015 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.145 secs
+##  Time difference of 0.197 secs
 ```
 
 ```
@@ -335,7 +336,7 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 0)
-## <environment: 0x0775b648>
+## <environment: 0x06ccc184>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -359,7 +360,7 @@ garchFit(~garch(1, 0), data = y, include.mean = FALSE)
 ##  -2208    normalized:  -1.755 
 ## 
 ## Description:
-##  Fri Apr 26 11:40:19 2013 by user: Z-Q
+##  Sun Apr 28 20:41:10 2013 by user: Z-Q
 ```
 
 ```r
@@ -461,13 +462,13 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ## alpha3  -348.6  -360.9 -156.3 -652.8 -156.2
 ## alpha4  -287.6  -324.8 -222.9 -156.2 -592.5
 ## attr(,"time")
-## Time difference of 0.137 secs
+## Time difference of 0.147 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.504 secs
+##  Time difference of 0.541 secs
 ```
 
 ```
@@ -480,7 +481,7 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(4, 0)
-## <environment: 0x04c33c04>
+## <environment: 0x072f01e8>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -507,7 +508,7 @@ garchFit(~garch(4, 0), data = y, include.mean = FALSE)
 ##  -1913    normalized:  -1.52 
 ## 
 ## Description:
-##  Fri Apr 26 11:40:20 2013 by user: Z-Q
+##  Sun Apr 28 20:41:11 2013 by user: Z-Q
 ```
 
 ```r
@@ -611,13 +612,13 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ## alpha4 -25579 -20287 -20482 -20079 -20621 -23197
 ## beta1  -39015 -23003 -23098 -22858 -23197 -29762
 ## attr(,"time")
-## Time difference of 0.195 secs
+## Time difference of 0.216 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.573 secs
+##  Time difference of 0.621 secs
 ```
 
 ```
@@ -630,7 +631,7 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(4, 1)
-## <environment: 0x0779ff6c>
+## <environment: 0x0738642c>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -658,7 +659,7 @@ garchFit(~garch(4, 1), data = y, include.mean = FALSE)
 ##  -1826    normalized:  -1.451 
 ## 
 ## Description:
-##  Fri Apr 26 11:40:20 2013 by user: Z-Q
+##  Sun Apr 28 20:41:11 2013 by user: Z-Q
 ```
 
 ```r
@@ -744,13 +745,13 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ## alpha1  -79509 -64620  -72787
 ## beta1  -117673 -72787  -94188
 ## attr(,"time")
-## Time difference of 0.033 secs
+## Time difference of 0.037 secs
 ## 
 ## --- END OF TRACE ---
 ## 
 ## 
 ## Time to Estimate Parameters:
-##  Time difference of 0.151 secs
+##  Time difference of 0.161 secs
 ```
 
 ```
@@ -763,7 +764,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 1)
-## <environment: 0x0779aae8>
+## <environment: 0x07382ecc>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -788,7 +789,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE)
 ##  -1837    normalized:  -1.46 
 ## 
 ## Description:
-##  Fri Apr 26 11:40:20 2013 by user: Z-Q
+##  Sun Apr 28 20:41:12 2013 by user: Z-Q
 ```
 
 ```r
@@ -806,7 +807,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE, cond.dist = "std", trace 
 ## 
 ## Mean and Variance Equation:
 ##  data ~ garch(1, 1)
-## <environment: 0x070a75b0>
+## <environment: 0x07429790>
 ##  [data = y]
 ## 
 ## Conditional Distribution:
@@ -832,7 +833,7 @@ garchFit(~garch(1, 1), data = y, include.mean = FALSE, cond.dist = "std", trace 
 ##  -1813    normalized:  -1.441 
 ## 
 ## Description:
-##  Fri Apr 26 11:40:21 2013 by user: Z-Q
+##  Sun Apr 28 20:41:12 2013 by user: Z-Q
 ```
 
 ```r
@@ -1047,7 +1048,7 @@ hist(fsim, nclass = 100, probability = TRUE)
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-112.png) 
 
-*** 7.3.1
+### 7.3.1
 VaR值的MC模拟步骤
 1. 计算投资组合的初始价值
 $$\vartheta _{t}=x^{b}P_{t}$$
@@ -1074,7 +1075,7 @@ q = sort(Psim - P)  # simulated P/L
 VaR1 = -q[p * S]  # get VaR
 ```
 
-*** 7.3.2
+### 7.3.2
 债券的模拟步骤只要将第一与第四步替换成如下
 1'. $$\vartheta _{t}=x^{0}g(P_{t},X,T,\sqrt{250}\sigma ,r)$$
 4'. $$\vartheta _{t+1,i}=x^{0}g(P_{t+1,i},X,T-1/365,\sqrt{250}\sigma ,r)$$
@@ -1124,10 +1125,172 @@ q=sort(fsim$Call - f$Call) # simulated P/L
 VaR2 = -q[p * S] # get VaR
 ```
 
-*** 7.3.3
+### 7.3.3
 债券与股票的组合模拟就是将第一步与第四部分别的式子进行简单的相加
 
 7.4投资组合VaR的模拟
 -----------------------
 
+
+
+
+
+8.2 S&P500的后验检验
+-----------------------
+
+```r
+library("tseries") # time series library
+library(zoo)
+p=get.hist.quote(instrument = "^gspc", start = "1994-02-11",end = "2009-12-31",quote = "AdjClose",quiet = T)# download the prices
+y=diff(log (p)) # get returns
+y=coredata (y) # strip date information from returns
+T=length (y) # number of observations for return y
+WE = 1000 # estimation window length
+p = 0.01 # probability
+l1 = WE * p # HS observation
+value = 1; # portfolio
+VaR = matrix (nrow=T,ncol=4) # matrix to hold VaR forecasts for 4 models
+# EWMA setup
+lambda = 0.94;
+s11 = var (y[1:30]);
+for (t in 2:WE) s11 = lambda * s11 + (1 - lambda) * y[t - 1]^2
+library(fGarch)
+for (t in (WE + 1):T){
+t1 = t- WE; # start of the data window
+t2 = t- 1; # end of the data window
+window = y[t1:t2] # data for estimation
+# EWMA
+s11 = lambda * s11 + (1- lambda) * y[t - 1]^2
+VaR[t,1] = -qnorm(p) * sqrt(s11) * value#没有-号
+#MA
+VaR[t,2] = -sd(window) * qnorm(p)* value#没有-号
+#HS
+ys =sort(window) # sort returns
+VaR[t,3] = -ys[l1]* value # VaR number
+# GARCH(1,1)
+g=garchFit (formula = ~ garch(1,1), window ,trace=FALSE,include.mean=FALSE)
+par=g@fit$matcoef # put parameters into vector par
+s4=par[1]+par[2]* window[WE]^2+par[3]* g@h.t[WE]
+VaR[t,4] =- sqrt(s4) * qnorm(p) * value   #没有-号，教材错误
+}
+
+W1 = WE+1
+for (i in 1:4){
+VR =sum (y[W1:T] < - VaR[W1:T,i])/(p*(T - WE))
+s=sd(VaR[W1:T,i]) # VaR volatility
+cat (i,"VR",VR,"VaR vol",s,"\n") # print results
+}
+```
+
+```
+## 1 VR 1.867 VaR vol 0.01565 
+## 2 VR 3.033 VaR vol 0.005965 
+## 3 VR 2.033 VaR vol 0.008924 
+## 4 VR 1.833 VaR vol 0.01464
+```
+
+```r
+matplot(cbind(y[W1:T],VaR[W1:T,]),type='l')
+```
+
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
+
+
+### 8.3.1 伯努利覆盖检验
+
+```r
+bern_test = function(p, v) {
+    a = p^(sum(v)) * (1 - p)^(length(v) - sum(v))
+    b = (sum(v)/length(v))^(sum(v)) * (1 - (sum(v)/length(v)))^(length(v) - 
+        sum(v))
+    return(-2 * log(a/b))
+}
+```
+
+### 8.3.2 violations的独立性检验
+
+```r
+ind_test = function(V) {
+    J = matrix(ncol = 4, nrow = length(V))
+    for (i in 2:length(V)) {
+        J[i, 1] = V[i - 1] == 0 & V[i] == 0
+        J[i, 2] = V[i - 1] == 0 & V[i] == 1
+        J[i, 3] = V[i - 1] == 1 & V[i] == 0
+        J[i, 4] = V[i - 1] == 1 & V[i] == 1
+    }
+    V_00 = sum(J[, 1], na.rm = TRUE)
+    V_01 = sum(J[, 2], na.rm = TRUE)
+    V_10 = sum(J[, 3], na.rm = TRUE)
+    V_11 = sum(J[, 4], na.rm = TRUE)
+    p_00 = V_00/(V_00 + V_01)
+    p_01 = V_01/(V_00 + V_01)
+    p_10 = V_10/(V_10 + V_11)
+    p_11 = V_11/(V_10 + V_11)
+    hat_p = (V_01 + V_11)/(V_00 + V_01 + V_10 + V_11)
+    a = (1 - hat_p)^(V_00 + V_10) * (hat_p)^(V_01 + V_11)
+    b = (p_00)^(V_00) * (p_01)^(V_01) * (p_10)^(V_10) * p_11^(V_11)
+    return(-2 * log(a/b))
+}
+```
+
+#### 8.3.3 S&P的VaR的检验
+
+
+```r
+W1 = WE + 1
+ya = y[W1:T]
+VaRa = VaR[W1:T, ]
+m = c("EWMA", "MA", "HS", "GARCH")
+for (i in 1:4) {
+    q = y[W1:T] < -VaR[W1:T, i]
+    v = VaRa * 0
+    v[q, i] = 1
+    ber = bern_test(p, v[, i])
+    ind = ind_test(v[, i])
+    cat(i, m[i], "Bernoulli", ber, 1 - pchisq(ber, 1), "independence", ind, 
+        1 - pchisq(ind, 1), "\n")
+}
+```
+
+```
+## 1 EWMA Bernoulli 18.13 2.059e-05 independence 0.002102 0.9634 
+## 2 MA Bernoulli 81.22 0 independence 7.187 0.007343 
+## 3 HS Bernoulli 24.91 6.022e-07 independence 4.108 0.04269 
+## 4 GARCH Bernoulli 16.89 3.969e-05 independence 7.754e-05 0.993
+```
+
+
+8.4 期望缺口的后验检验
+---------------------------
+
+```r
+ES = matrix(nrow = T, ncol = 2)  # ES forecasts for 2 models
+VaR = matrix(nrow = T, ncol = 2)  # VaR forecasts for 2 models
+for (t in (WE + 1):T) {
+    t1 = t - WE
+    t2 = t - 1
+    window = y[t1:t2]
+    # EWMA
+    s11 = lambda * s11 + (1 - lambda) * y[t - 1]^2
+    VaR[t, 1] = -qnorm(p) * sqrt(s11) * value
+    ES[t, 1] = sqrt(s11) * dnorm(qnorm(p))/p
+    # HS
+    ys = sort(window)
+    VaR[t, 2] = -ys[l1] * value
+    ES[t, 2] = -mean(ys[1:l1]) * value  # ES number
+}
+
+ESa = ES[W1:T, ]
+VaRa = VaR[W1:T, ]
+for (i in 1:2) {
+    q = ya <= -VaRa[, i]
+    nES = mean(ya[q]/-ESa[q, i])
+    cat(i, "nES", nES, "\n")
+}
+```
+
+```
+## 1 nES 1.111 
+## 2 nES 1.084
+```
 
